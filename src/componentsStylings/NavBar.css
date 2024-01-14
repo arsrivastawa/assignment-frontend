@@ -1,0 +1,8 @@
+@media (max-width: 1024px) {
+  .ham-burger-menu {
+    display: none !important;
+  }
+  .LoginRegisterCombo-container {
+    display: none;
+  }
+}
