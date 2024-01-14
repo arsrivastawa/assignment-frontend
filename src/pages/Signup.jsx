@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "../assets/groovio.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/InputBox";
 import Button from "../components/Buttons";
 import Alert from "../components/Alert";
+import { DataContext } from "../helperFunctions/DataProvider";
+import { handleSignup } from "../helperFunctions/AuthFunctions";
 
 function Signup() {
-  const [uname, setUname] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [uID, setUID] = useState("");
-  const [Password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
   const [msgToggler, setMsgToggler] = useState(false);
   const [msg, setMsg] = useState("");
+  const User = useContext(DataContext);
+  const navigate = useNavigate();
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -41,7 +44,7 @@ function Signup() {
                   id={"name"}
                   label={"Name"}
                   placeholder={"Enter Your Name"}
-                  setter={setUname}
+                  setter={setName}
                 />
                 <Input
                   type="email"
@@ -49,12 +52,6 @@ function Signup() {
                   label={"Email"}
                   placeholder={"Enter your email"}
                   setter={setEmail}
-                />
-                <Input
-                  id={"uid"}
-                  label={"UserID"}
-                  placeholder={"It should be unique"}
-                  setter={setUID}
                 />
                 <Input
                   type="password"
@@ -74,9 +71,18 @@ function Signup() {
                 <div className="flex w-full justify-center items-center">
                   <Button
                     title={"Sign Up"}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      alert("msgToggler");
+                    onClick={() => {
+                      handleSignup(
+                        name,
+                        email,
+                        password,
+                        cnfPassword,
+                        setMsg,
+                        setMsgToggler,
+                        navigate,
+                        User.setUser
+                      );
+                      console.log(msgToggler);
                     }}
                   />
                 </div>

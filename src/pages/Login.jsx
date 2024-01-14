@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "../assets/groovio.png";
 import Input from "../components/InputBox";
 import Button from "../components/Buttons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Alert from "../components/Alert";
+import handleLogin from "../helperFunctions/AuthFunctions";
+import { DataContext } from "../helperFunctions/DataProvider";
 
 function Login() {
+  const User = useContext(DataContext);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [msgToggler, setMsgToggler] = useState(false);
@@ -48,15 +52,23 @@ function Login() {
                   placeholder={"Enter your password"}
                   setter={setPassword}
                 />
-
+                <h1 className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                  Forgot Password?
+                </h1>
                 <Alert messageToggler={msgToggler} message={msg} />
                 <div className="flex w-full justify-center items-center">
                   <Button
                     title={"Log In"}
-                    onClick={(e) => {
-                      e.preventDefault;
-                      alert("Hello There");
-                    }}
+                    onClick={() =>
+                      handleLogin(
+                        email,
+                        Password,
+                        setMsg,
+                        setMsgToggler,
+                        navigate,
+                        User.setUser
+                      )
+                    }
                   />
                 </div>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
