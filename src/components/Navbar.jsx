@@ -27,7 +27,7 @@ function Navbar({ userName }) {
 
   function handleSearch() {
     axios
-      .post("http://localhost:3000/api/v2/search", { keyword })
+      .post("https://alive-ox-necklace.cyclic.appapi/v2/search", { keyword })
       .then((res) => Product.setProductDataForManipulation(res.data.result));
   }
 
