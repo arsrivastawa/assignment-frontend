@@ -4,7 +4,11 @@ export const DataContext = createContext();
 
 function DataProvider({ children }) {
   const [userData, setUserData] = useState({});
+  const [productData, setProductData] = useState([]);
 
+  function setProduct(Data) {
+    setProductData(Data ? Data : []);
+  }
   function setUser(Data) {
     setUserData({
       name: Data ? Data.name : null,
@@ -14,7 +18,9 @@ function DataProvider({ children }) {
 
   return (
     <>
-      <DataContext.Provider value={{ userData, setUser }}>
+      <DataContext.Provider
+        value={{ userData, setUser, productData, setProduct }}
+      >
         {children}
       </DataContext.Provider>
     </>

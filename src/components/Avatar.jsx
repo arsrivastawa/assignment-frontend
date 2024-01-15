@@ -63,6 +63,7 @@ function Avatar({ userName }) {
                   if (localStorage.getItem("token")) {
                     localStorage.removeItem("token");
                     User.setUser({});
+                    navigate("/");
                   }
                 }}
                 className="font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md"

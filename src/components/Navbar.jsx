@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Logo from "../assets/groovio.png";
 import { HamBurgerButton } from "./Buttons";
@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import LoginRegisterCombo from "./LoginRegisterCombo";
 import "../componentsStylings/NavBar.css";
 import Avatar from "./Avatar";
+import { DataContext } from "../helperFunctions/DataProvider";
 
-function Navbar() {
+function Navbar({ userName }) {
   const [visible, setVisible] = useState(false);
 
   function toggleVisibile() {
@@ -45,8 +46,7 @@ function Navbar() {
           </Link>
           <div class="flex items-center sm:order-2">
             <ThemeSwitcher />
-            {/* <LoginRegisterCombo /> */}
-            <Avatar userName={"Aditya Ranjan"} />
+            {userName ? <Avatar userName={userName} /> : <LoginRegisterCombo />}
           </div>
           <div
             class="justify-between items-center w-full sm:flex sm:w-auto sm:order-1"
