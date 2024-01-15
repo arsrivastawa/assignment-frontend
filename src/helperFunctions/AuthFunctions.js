@@ -18,7 +18,7 @@ export default function handleLogin(
   } else if (email != "" && password != "") {
     axios
       .post(
-        "http://localhost:3000/api/v1/login",
+        "https://alive-ox-necklace.cyclic.app/api/v1/login",
         { email, password },
         {
           headers: {
@@ -78,7 +78,7 @@ export function handleSignup(
   } else if (email != "" && password != "" && cnfPassword != "" && name != "") {
     if (password == cnfPassword) {
       axios
-        .post("http://localhost:3000/api/v1/create", {
+        .post("https://alive-ox-necklace.cyclic.app/api/v1/create", {
           name,
           email,
           password,

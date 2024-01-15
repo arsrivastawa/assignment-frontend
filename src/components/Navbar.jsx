@@ -1,15 +1,35 @@
 import React, { useContext, useState } from "react";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Logo from "../assets/groovio.png";
-import { HamBurgerButton } from "./Buttons";
 import { Link } from "react-router-dom";
 import LoginRegisterCombo from "./LoginRegisterCombo";
 import "../componentsStylings/NavBar.css";
 import Avatar from "./Avatar";
 import { DataContext } from "../helperFunctions/DataProvider";
+import axios from "axios";
 
 function Navbar({ userName }) {
+  const Product = useContext(DataContext);
   const [visible, setVisible] = useState(false);
+  const [keyword, setKeyword] = useState("");
+
+  function fltr(Category) {
+    Product.setProductDataForManipulation(Product.productData);
+    if (Category == "All") {
+      return;
+    }
+    Product.setProductDataForManipulation((data) =>
+      Product.productDataForManipulation.filter(
+        (val) => val.category == Category
+      )
+    );
+  }
+
+  function handleSearch() {
+    axios
+      .post("http://localhost:3000/api/v2/search", { keyword })
+      .then((res) => Product.setProductDataForManipulation(res.data.result));
+  }
 
   function toggleVisibile() {
     if (visible) {
@@ -56,11 +76,16 @@ function Navbar({ userName }) {
               <div className="flex px-2 flex-row w-full items-stretch justify-between">
                 <div className=" w-fit flex flex-row items-stretch">
                   <input
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setKeyword(e.target.value);
+                    }}
                     placeholder="Search item"
                     type="text"
                     class="pr-4 pl-3 md:text-sm text-xs outline-none text-primary-950 dark:text-primary-50 bg-transparent border-b-[1px] dark:border-b-primary-50 border-b-primary-950"
                   />
                   <button
+                    onClick={handleSearch}
                     to="signup"
                     className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-r-lg text-xs px-3 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                   >
@@ -84,19 +109,40 @@ function Navbar({ userName }) {
                       <li className="mb-2 font-semibold bg-transparent dark:text-primary-50 px-4 py-1 text-center">
                         <a className="bg-neutral">Categories</a>
                       </li>
-                      <li className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md">
+                      <li
+                        onClick={() => fltr("All")}
+                        className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md"
+                      >
+                        <a className="bg-neutral">All Categories</a>
+                      </li>
+                      <li
+                        onClick={() => fltr("Fashion")}
+                        className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md"
+                      >
                         <a className="bg-neutral">Fashion</a>
                       </li>
-                      <li className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md">
+                      <li
+                        onClick={() => fltr("Mobile")}
+                        className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md"
+                      >
                         <a className="bg-neutral">Mobiles</a>
                       </li>
-                      <li className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md">
+                      <li
+                        onClick={() => fltr("Electronics")}
+                        className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md"
+                      >
                         <a className="bg-neutral">Electronics</a>
                       </li>
-                      <li className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md">
+                      <li
+                        onClick={() => fltr("Grocery")}
+                        className="mb-2 font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md"
+                      >
                         <a className="bg-neutral">Grocery</a>
                       </li>
-                      <li className="font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md">
+                      <li
+                        onClick={() => fltr("Medicines")}
+                        className="font-semibold bg-primary-50 dark:bg-gray-800 dark:text-primary-50 dark:hover:bg-gray-700 hover:bg-primary-100 px-4 py-2 rounded-md"
+                      >
                         <span className="bg-neutral text-center">
                           Medicines
                         </span>

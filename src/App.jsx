@@ -25,7 +25,7 @@ function App() {
     let token = localStorage.getItem("token");
     if (token) {
       axios
-        .post("http://localhost:3000/api/v1/user", { token })
+        .post("https://alive-ox-necklace.cyclic.app/api/v1/user", { token })
         .then((res) => {
           User.setUser(res.data);
           console.log(res.data);
