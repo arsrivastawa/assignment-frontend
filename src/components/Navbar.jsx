@@ -61,7 +61,7 @@ function Navbar({ userName }) {
           <Link to="/" class="flex items-center">
             <img src={Logo} class="mr-3 h-6 sm:h-9" alt="Groovio Logo" />
             <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
-              Flowbite
+              Groovio
             </span>
           </Link>
           <div class="flex items-center sm:order-2">
